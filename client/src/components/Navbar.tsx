@@ -107,6 +107,7 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
+    
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -166,10 +167,21 @@ const MobileNavbar = () => {
                         <span>Restaurant Orders</span>
                     </Link>
                 </SheetDescription>
-                <SheetFooter>
-                    <SheetClose asChild>
-                        <Button type="submit" className="bg-orange hover:bg-hoverOrange">Logout</Button>
-                    </SheetClose>
+                <SheetFooter className="flex flex-col gap-4">
+            
+                    <div className="flex flex-row items-center gap-2">
+                        <Avatar>
+                            <AvatarImage/>
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <h1 className="font-bold">Sujit Kumar</h1>
+                    </div>
+                             <SheetClose asChild>
+                                    <Button type="submit" className="bg-orange hover:bg-hoverOrange">Logout</Button>
+                                </SheetClose>
+                
+            
+                   
                 </SheetFooter>
             </SheetContent>
         </Sheet>
