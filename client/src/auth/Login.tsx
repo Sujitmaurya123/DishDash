@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator";
 import { LoginInputState, userLoginSchema } from "@/schema/userSchema";
+import { useUserStore } from "@/store/useUserStore";
 
 import { Loader2, LockKeyhole, Mail } from "lucide-react"
 import { useState } from "react";
@@ -22,12 +23,13 @@ export const Login = () => {
         password:"",
     })
     const [errors, setErrors] = useState<Partial<LoginInputState>>({});
+    const {loading, login}=useUserStore();
 
     const changeEventHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
             const {name,value}=e.target;
             setInput({...input,[name]:value});
     }
-    const loginSubmitHandler=(e:React.FormEvent)=>{
+    const loginSubmitHandler=async(e:React.FormEvent)=>{
             e.preventDefault();
         // form validation check start
         const result = userLoginSchema.safeParse(input);
@@ -36,9 +38,11 @@ export const Login = () => {
             setErrors(fieldErrors as Partial<LoginInputState>);
             return;
         }
-            console.log(input);
+
+            // console.log(input);
+            await login(input);
     }
-    const loading =false; 
+    // const loading =false; 
     return (
         <div className="flex items-center justify-center min-h-screen">
             <form onSubmit={loginSubmitHandler} className=" md:p-8 w-full max-w-md   md:border border-gray-200 rounded-lg mx-4" >

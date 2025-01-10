@@ -7,12 +7,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 
 import { Separator } from "@radix-ui/react-separator";
+import { useUserStore } from "@/store/useUserStore";
 
 
 
 const Navbar = () => {
-    const admin = true;
-    const loading = false;
+    // const admin = true;
+    // const loading = false;
+    const {user,loading}=useUserStore();
     return (
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between h-14">
@@ -27,7 +29,7 @@ const Navbar = () => {
 
 
                         {
-                            admin && (
+                           user?.admin && (
                                 <Menubar>
                                     <MenubarMenu>
 
@@ -107,7 +109,7 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
-    
+    const { user } = useUserStore();
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -154,6 +156,9 @@ const MobileNavbar = () => {
                         <ShoppingCart />
                         <span>Cart (0)</span>
                     </Link>
+                    {
+                        user?.admin && (
+                            <>
                     <Link to="/admin/addmenu" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
                         <SquareMenu />
                         <span>Menu</span>
@@ -166,6 +171,9 @@ const MobileNavbar = () => {
                         <PackageCheck />
                         <span>Restaurant Orders</span>
                     </Link>
+                            </>
+                        )
+                    }
                 </SheetDescription>
                 <SheetFooter className="flex flex-col gap-4">
             

@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator";
 import { SignupInputState, userSignupSchema } from "@/schema/userSchema";
+import { useUserStore } from "@/store/useUserStore";
 
 import { Loader2, LockKeyhole, Mail, PhoneOutgoing, User } from "lucide-react"
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // interface LoginInputState {
 //     email:string;
@@ -26,13 +27,16 @@ export const Signup = () => {
         password: "",
         contact:""
     })
+    const navigate = useNavigate();
+
     const [errors, setErrors] = useState<Partial<SignupInputState>>({});
+    const {signup,loading}=useUserStore();
 
     const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setInput({ ...input, [name]: value });
     }
-    const loginSubmitHandler = (e: React.FormEvent) => {
+    const loginSubmitHandler = async(e: React.FormEvent) => {
         e.preventDefault();
         // form validation check start
         const result=userSignupSchema.safeParse(input);
@@ -42,10 +46,15 @@ export const Signup = () => {
             return;
         }
         // login api implementaion start here
-        console.log(input);
-
+        // console.log(input);
+        try {
+            await signup(input);
+            navigate("/verify-email");
+        } catch (error) {
+            console.log(error);
+        }
     }
-    const loading = false;
+    // const loading = false;
     return (
         <div className="flex items-center justify-center min-h-screen">
             <form onSubmit={loginSubmitHandler} className=" md:p-8 w-full max-w-md   md:border border-gray-200 rounded-lg mx-4" >
