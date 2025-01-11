@@ -221,13 +221,14 @@ export const updateProfile = async (req: Request, res: Response) => {
     try {
         const userId = req.id;
         const { fullname, email, address, city, country, profilePicture } = req.body;
+        
         // upload image on cloudinary
         let cloudResponse: any;
         cloudResponse = await cloudinary.uploader.upload(profilePicture);
         const updatedData = {fullname, email, address, city, country, profilePicture};
 
         const user = await User.findByIdAndUpdate(userId, updatedData,{new:true}).select("-password");
-
+        
         res.status(200).json({
             success:true,
             user,

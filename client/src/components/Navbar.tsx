@@ -8,13 +8,15 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 
 import { Separator } from "@radix-ui/react-separator";
 import { useUserStore } from "@/store/useUserStore";
+import { useCartStore } from "@/store/useCartStore";
 
 
 
 const Navbar = () => {
     // const admin = true;
     // const loading = false;
-    const {user,loading}=useUserStore();
+    const {user,loading,logout}=useUserStore();
+    const {cart}= useCartStore();
     return (
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between h-14">
@@ -70,15 +72,29 @@ const Navbar = () => {
                         </div>
                         <Link to="/cart" className="relative cursor-pointer">
                             <ShoppingCart />
+                            {
+                                cart.length >0 && (
+
                             <Button size={'icon'} className="absolute -inset-y-3 left-2 text-xs rounded-full h-4 w-4 bg-red-500 hover:bg-red-700">
-                                2
+                                {cart.length}
                             </Button>
+                                )
+                            }
                         </Link>
-                        <div>
+                        <div >
                             <Avatar>
                                 <AvatarImage />
-                                <AvatarFallback>CN</AvatarFallback>
+                                {/* Display profile picture if available, otherwise use fallback */}
+                                {user?.profilePicture ? (
+                                    <AvatarImage src={user?.profilePicture} alt="Profile Picture" />
+                                    
+                                ) : (
+                                    <AvatarFallback>
+                                        CN
+                                    </AvatarFallback>
+                                )}
                             </Avatar>
+                            {/* <p>{user?.fullname}</p> */}
                         </div>
                         <div>
                             {
@@ -89,7 +105,7 @@ const Navbar = () => {
                                         Please wait
                                     </Button>
                                 ) : (
-                                    <Button className="bg-orange hover:bg-hoverOrange">
+                                    <Button onClick={logout} className="bg-orange hover:bg-hoverOrange">
                                         Logout
                                     </Button>
                                 )
@@ -109,7 +125,7 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
-    const { user } = useUserStore();
+    const { user,logout,loading } = useUserStore();
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -185,7 +201,20 @@ const MobileNavbar = () => {
                         <h1 className="font-bold">Sujit Kumar</h1>
                     </div>
                              <SheetClose asChild>
-                                    <Button type="submit" className="bg-orange hover:bg-hoverOrange">Logout</Button>
+                                   
+                        {
+                            loading ? (
+
+                                <Button className="bg-orange hover:bg-hoverOrange">
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Please wait
+                                </Button>
+                            ) : ( 
+                                <Button onClick={logout} className="bg-orange hover:bg-hoverOrange">
+                                    Logout
+                                </Button>
+                            )
+                        }
                                 </SheetClose>
                 
             
