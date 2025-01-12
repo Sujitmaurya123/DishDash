@@ -37,6 +37,7 @@ export const getOrders = async (req: Request, res: Response) => {
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
     try {
+        
         const checkoutSessionRequest: CheckoutSessionRequest = req.body;
         const restaurant = await Restaurant.findById(checkoutSessionRequest.restaurantId).populate('menus');
         if (!restaurant) {
@@ -46,6 +47,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
             })
             return;
         };
+        
         const order: any = new Order({
             restaurant: restaurant._id,
             user: req.id,
@@ -72,6 +74,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
                 images: JSON.stringify(menuItems.map((item: any) => item.image))
             }
         });
+        
         if (!session.url) {
              res.status(400).json({ success: false, message: "Error while creating session" });
              return;

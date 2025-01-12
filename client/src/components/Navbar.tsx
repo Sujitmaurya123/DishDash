@@ -9,6 +9,7 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 import { Separator } from "@radix-ui/react-separator";
 import { useUserStore } from "@/store/useUserStore";
 import { useCartStore } from "@/store/useCartStore";
+import { useThemeStore } from "@/store/useThemeStore";
 
 
 
@@ -17,6 +18,7 @@ const Navbar = () => {
     // const loading = false;
     const {user,loading,logout}=useUserStore();
     const {cart}= useCartStore();
+    const { setTheme } = useThemeStore();
     return (
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between h-14">
@@ -60,10 +62,10 @@ const Navbar = () => {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem >
+                                    <DropdownMenuItem onClick={() => setTheme('light')} >
                                         Light
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem >
+                                    <DropdownMenuItem onClick={() => setTheme('dark')} >
                                         Dark
                                     </DropdownMenuItem>
 
@@ -83,7 +85,7 @@ const Navbar = () => {
                         </Link>
                         <div >
                             <Avatar>
-                                <AvatarImage />
+                               
                                 {/* Display profile picture if available, otherwise use fallback */}
                                 {user?.profilePicture ? (
                                     <AvatarImage src={user?.profilePicture} alt="Profile Picture" />
@@ -126,6 +128,7 @@ export default Navbar;
 
 const MobileNavbar = () => {
     const { user,logout,loading } = useUserStore();
+    const {setTheme}=useThemeStore();
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -146,10 +149,10 @@ const MobileNavbar = () => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem >
+                            <DropdownMenuItem onClick={()=> setTheme('light')} >
                                 Light
                             </DropdownMenuItem>
-                            <DropdownMenuItem >
+                            <DropdownMenuItem onClick={() => setTheme('dark')} >
                                 Dark
                             </DropdownMenuItem>
 
@@ -195,10 +198,18 @@ const MobileNavbar = () => {
             
                     <div className="flex flex-row items-center gap-2">
                         <Avatar>
-                            <AvatarImage/>
-                            <AvatarFallback>CN</AvatarFallback>
+
+                            {/* Display profile picture if available, otherwise use fallback */}
+                            {user?.profilePicture ? (
+                                <AvatarImage src={user?.profilePicture} alt="Profile Picture" />
+
+                            ) : (
+                                <AvatarFallback>
+                                    CN
+                                </AvatarFallback>
+                            )}
                         </Avatar>
-                        <h1 className="font-bold">Sujit Kumar</h1>
+                        <h1 className="font-bold">{user?.fullname}</h1>
                     </div>
                              <SheetClose asChild>
                                    
