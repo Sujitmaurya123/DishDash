@@ -23,6 +23,7 @@ import { useEffect } from 'react'
 import Loading from './components/Loading'
 import { useThemeStore } from './store/useThemeStore'
 
+
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
   if (!isAuthenticated) {
@@ -139,7 +140,7 @@ function App() {
     initializeTheme();
 
     
-  }, [checkAuthentication])
+  }, [checkAuthentication, initializeTheme])
 
   if (isCheckingAuth) return <Loading />
 
