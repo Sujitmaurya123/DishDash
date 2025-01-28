@@ -1,13 +1,31 @@
+// {
+//     "compilerOptions": {
+//       "rootDirs": ["src"],
+//       "outDir": "dist",
+//       "lib": ["es2020"],
+//       "target": "es2020",
+//       "strict": true,
+//       "module": "Node16",
+//       "moduleResolution": "Node16",
+//       "esModuleInterop": true,
+//       "types": ["node"]
+//     },
+//     "include": ["src"]
+//   }
 {
-    "compilerOptions": {
-      "rootDirs": ["src"],
-      "outDir": "dist",
-      "lib": ["es2020"],
-      "target": "es2020",
-      "module": "Node16",
-      "moduleResolution": "Node16",
-      "esModuleInterop": true,
-      "types": ["node"]
-    },
-    "include": ["src"]
-  }
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node"] // Ensures Node.js type definitions are included
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
