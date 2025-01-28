@@ -91,7 +91,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 }
 
 export const stripeWebhook = async (req: Request, res: Response) => {
-    let event;
+    let event: Stripe.Event | undefined;
 
     try {
         const signature = req.headers["stripe-signature"];
@@ -112,7 +112,11 @@ export const stripeWebhook = async (req: Request, res: Response) => {
         console.error('Webhook error:', error.message);
          res.status(400).send(`Webhook error: ${error.message}`);
     }
-
+        // Ensure the event is defined before accessing its properties
+    if (!event) {
+        res.status(400).send("Invalid event");
+        return;
+    }
     // Handle the checkout session completed event
     if (event.type === "checkout.session.completed") {
         try {
