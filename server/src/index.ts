@@ -18,14 +18,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true,limit:'10mb' }));
 app.use(cookieParser());
 
-
-app.use(cors());
+const corsOptions={
+    origin:["http://localhost:5173",'https://dish-dash-ten.vercel.app'],
+    credentials:true,
+} 
+app.use(cors(corsOptions));
 // api
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/restaurant", restaurantRoute);
 app.use("/api/v1/menu", menuRoute);
 app.use("/api/v1/order", orderRoute);
 
+app.get("/",(req,res)=>{
+    res.send("API Working with /api/v1");
+});
 
 app.listen(PORT, () =>{
     connectDB(); 
