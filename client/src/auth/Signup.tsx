@@ -56,7 +56,23 @@ export const Signup = () => {
     }
     // const loading = false;
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <>
+            <div className="mt-[50px] text-center mb-[50px] ">
+                <h1 className="font-bold text-4xl">DishDash</h1>
+            </div>
+            <div className="flex items-center justify-center max-h-screen">
+                <div className="flex justify-center flex-wrap md:flex-nowrap w-full max-w-6xl shadow-lg  rounded-lg overflow-hidden">
+                    {/* Left Section: Image */}
+                    <div className=" flex justify-center w-1/2 ">
+                        <img
+                            src="/images/Food-Delivery.svg" // Replace with your image URL
+                            alt="Login Illustration"
+                            className=" object-contain w-full h-full "
+                        />
+                    </div>
+
+                    {/* Right Section: Login Form */}
+                    <div className="w-full  p-6 md:p-8">
             <form onSubmit={loginSubmitHandler} className=" md:p-8 w-full max-w-md   md:border border-gray-200 rounded-lg mx-4" >
                 <div className="mb-4">
                     <h1 className="font-bold text-2xl">DishDash</h1>
@@ -138,6 +154,10 @@ export const Signup = () => {
                     <Link to="/login" className="text-blue-500">Login</Link>
                 </p>
             </form>
+            </div>
         </div>
+    </div>
+
+        </>
     )
 }

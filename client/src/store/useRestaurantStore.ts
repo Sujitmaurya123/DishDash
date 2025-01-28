@@ -5,7 +5,8 @@ import { toast } from "sonner";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-const API_END_POINT = "http://localhost:8000/api/v1/restaurant";
+const server = import.meta.env.VITE_SERVER;
+const API_END_POINT = `${server}/api/v1/restaurant`;
 axios.defaults.withCredentials = true;
 
 
