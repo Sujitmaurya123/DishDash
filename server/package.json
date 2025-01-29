@@ -4,11 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "nodemon server/index.ts",
     "watch": "tsc -w",
     "server": "nodemon dist/index.js",
+    "stripe":"stripe listen --forward-to localhost:8000/api/v1/order/webhook",
     "dev": "concurrently \"npm run watch\" \"npm run server\"",
-    "build": "tsc"
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
